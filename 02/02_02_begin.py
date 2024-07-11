@@ -3,6 +3,8 @@ from string import punctuation
 from collections import Counter
 from collections import defaultdict
 
+#This below is a list of tuples. 
+#Each tuple is labelled positive and negative, thus, this is a form of supervised learning. 
 post_comments_with_labels = [
     ("I love this post.", "pos"),
     ("This post is your best work.", "pos"),
@@ -41,6 +43,18 @@ class NaiveBayesClassifier:
         tokens = self.tokenize(text)
         pos = []
         neg = []
+
+        for token in tokens: 
+            pos.append(self.pos_counter[token]/self.sample_count)
+            neg.append(self.neg_counter[token]/self.sample_count)
+
+        if sum(pos) == sum(neg):
+            return "nutral"
+        
+        if sum(pos) > sum(neg):
+            return "pos"
+        else: 
+            return "neg"
 
 
 
